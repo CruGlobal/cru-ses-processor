@@ -1,0 +1,48 @@
+service: cru-ses-processor
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  stage: production
+  region: us-east-1
+  environment: ${file(serverless/environment.js)}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - SNS:Publish
+      Resource: ${env:SNS_SES_EVENTS_FILTERABLE_ARN}
+  $<<: ${file(serverless/provider.js)}
+
+functions:
+  processMessage:
+    handler: handlers/process-message.handler
+    timeout: 30
+    events:
+      - sns:
+          arn: ${env:SNS_ALL_SES_EVENTS_ARN}
+
+package:
+  exclude:
+    - .git/**
+    - test/**
+    - '**/*.test.js'
+    - '**/*.sql'
+    - .deployment/**
+
+plugins:
+  - '@cruglobal/serverless-merge-config'
+  - serverless-webpack
+
+custom:
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules: true
+    packager: yarn
+
+resources:
+  Resources:
+    IamRoleLambdaExecution:
+      Properties:
+        ManagedPolicyArns:
+          - arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole
+          - arn:aws:iam::aws:policy/service-role/AWSLambdaENIManagementAccess

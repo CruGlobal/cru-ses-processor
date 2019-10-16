@@ -1,0 +1,47 @@
+{
+  "name": "cru-ses-processor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "handlers/process-message.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CruGlobal/cru-ses-processor.git"
+  },
+  "author": "Brian Zoetewey <brian.zoetewey@cru.org>",
+  "license": "BSD",
+  "private": true,
+  "engines": {
+    "node": "> 10.15.0"
+  },
+  "scripts": {
+    "lint": "standard --fix --verbose || exit 0",
+    "test": "jest --detectOpenHandles --coverage"
+  },
+  "devDependencies": {
+    "@cruglobal/serverless-merge-config": "^1.1.0",
+    "@types/jest": "^24.0.15",
+    "dotenv": "^8.0.0",
+    "jest": "^24.8.0",
+    "serverless": "^1.44.1",
+    "serverless-webpack": "^5.3.1",
+    "standard": "^12.0.1",
+    "webpack": "^4.2.0",
+    "webpack-node-externals": "^1.6.0"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.470.0",
+    "lodash": "^4.17.14",
+    "rollbar": "^2.8.1"
+  },
+  "standard": {
+    "env": {
+      "node": true,
+      "jest": true
+    }
+  },
+  "jest": {
+    "setupFiles": [
+      "./tests/setup.js"
+    ]
+  }
+}
