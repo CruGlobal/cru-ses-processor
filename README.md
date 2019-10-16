@@ -28,8 +28,8 @@ recipients            | String.Array | A list of the intended recipients of the 
 * Filter on `Permanent` bounce type from `no-reply@cru.org`:
 ```json
 {
-  "bounceType": "Permanent",
-  "source": "no-reply@cru.org"
+  "bounceType": [ "Permanent" ],
+  "source": [ "no-reply@cru.org" ]
 }
 ```
 See [Filter Policies](https://docs.aws.amazon.com/sns/latest/dg/sns-subscription-filter-policies.html) for more examples and how to handle array fields.
