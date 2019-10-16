@@ -35,9 +35,10 @@ export const handler = async (lambdaEvent) => {
           DataType: 'String',
           StringValue: message['bounce'].bounceSubType
         }
+        const bouncedRecipients = message['bounce'].bouncedRecipients.map(val => val.emailAddress)
         messageAttributes.bouncedRecipients = {
           DataType: 'String.Array',
-          StringValue: JSON.stringify(message['bounce'].bouncedRecipients)
+          StringValue: JSON.stringify(bouncedRecipients)
         }
         break
       case 'Complaint':
