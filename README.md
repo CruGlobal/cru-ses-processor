@@ -1,6 +1,11 @@
 # cru-ses-processor
 Lambda that processes all SES bounces, complaints and deliveries, sends metrics to DataDog and forwards to a filterable SNS queue
 
+# Features
+- [x] `all-ses-events-filterable` SNS queue
+- [ ] DataDog metrics for delivered, bounced and complaints
+- [ ] API to query existing bounced email list
+
 ## SNS Subscriptions
 All application subscriptions for SES events (bounce, complaint, delivery) should be added to the [`all-ses-events-filterable` queue](https://console.aws.amazon.com/sns/v3/home?region=us-east-1#/topic/arn:aws:sns:us-east-1:056154071827:all-ses-events-filterable).
 This queue is a duplicate of `all-ses-events` and includes messageAttributes which allow [SNS subscription filter policies](https://docs.aws.amazon.com/sns/latest/dg/sns-subscription-filter-policies.html).
