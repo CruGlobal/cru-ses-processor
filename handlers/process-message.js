@@ -3,10 +3,16 @@
 import { SNS } from 'aws-sdk'
 import rollbar from '../config/rollbar'
 
+const notificationTypes = ['Bounce', 'Complaint', 'Delivery']
+
 export const handler = async (lambdaEvent) => {
   try {
     // Parse message from lambdaEvent
     const message = JSON.parse(lambdaEvent.Records[0].Sns.Message)
+
+    if (notificationTypes.indexOf(message.notificationType) < 0) {
+      return {}
+    }
 
     // Create message attributes
     const messageAttributes = {
@@ -24,6 +30,7 @@ export const handler = async (lambdaEvent) => {
         StringValue: JSON.stringify(message['mail'].destination)
       }
     }
+
     switch (message.notificationType) {
       case 'Bounce':
         // See https://docs.aws.amazon.com/ses/latest/DeveloperGuide/notification-contents.html#bounce-object
@@ -71,7 +78,7 @@ export const handler = async (lambdaEvent) => {
       MessageAttributes: messageAttributes
     }).promise()
   } catch (error) {
-    rollbar.error('process-message error', error)
+    rollbar.error('process-message error', error, { lambdaEvent })
     return Promise.reject(error)
   }
 }
