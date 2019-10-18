@@ -22,6 +22,7 @@ functions:
           arn: ${env:SNS_ALL_SES_EVENTS_ARN}
 
 package:
+  individually: true
   exclude:
     - .git/**
     - test/**

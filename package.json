@@ -18,8 +18,12 @@
     "test": "jest --detectOpenHandles --coverage"
   },
   "devDependencies": {
+    "@babel/core": "^7.6.4",
+    "@babel/preset-env": "^7.6.3",
     "@cruglobal/serverless-merge-config": "^1.1.0",
     "@types/jest": "^24.0.15",
+    "babel-jest": "^24.9.0",
+    "babel-plugin-source-map-support": "^2.1.1",
     "dotenv": "^8.0.0",
     "jest": "^24.8.0",
     "serverless": "^1.44.1",
@@ -30,8 +34,10 @@
   },
   "dependencies": {
     "aws-sdk": "^2.470.0",
+    "dogapi": "^2.8.3",
     "lodash": "^4.17.14",
-    "rollbar": "^2.8.1"
+    "rollbar": "^2.8.1",
+    "source-map-support": "^0.5.13"
   },
   "standard": {
     "env": {

@@ -1,0 +1,73 @@
+{
+  "notificationType": "Bounce",
+  "bounce": {
+    "bounceType": "Permanent",
+    "bounceSubType": "General",
+    "bouncedRecipients": [
+      {
+        "emailAddress": "jane@example.com"
+      },
+      {
+        "emailAddress": "richard@cru.org"
+      }
+    ],
+    "timestamp": "2016-01-27T14:59:38.237Z",
+    "feedbackId": "00000137860315fd-869464a4-8680-4114-98d3-716fe35851f9-000000",
+    "remoteMtaIp": "127.0.2.0"
+  },
+  "mail": {
+    "timestamp": "2016-01-27T14:59:38.237Z",
+    "messageId": "00000137860315fd-34208509-5b74-41f3-95c5-22c1edc3c924-000000",
+    "source": "john@example.com",
+    "sourceArn": "arn:aws:ses:us-west-2:888888888888:identity/example.com",
+    "sourceIp": "127.0.3.0",
+    "sendingAccountId": "123456789012",
+    "destination": [
+      "jane@example.com",
+      "mary@example.com",
+      "richard@cru.org"
+    ],
+    "headersTruncated": false,
+    "headers": [
+      {
+        "name": "From",
+        "value": "\"John Doe\" <john@example.com>"
+      },
+      {
+        "name": "To",
+        "value": "\"Jane Doe\" <jane@example.com>, \"Mary Doe\" <mary@example.com>, \"Richard Doe\" <richard@cru.org>"
+      },
+      {
+        "name": "Message-ID",
+        "value": "custom-message-ID"
+      },
+      {
+        "name": "Subject",
+        "value": "Super long subject with wéîrd characters and emoji \uD83D\uDE00 \uD83E\uDD20 \uD83D\uDE3A  abcdefghijklmnopqrstuvwxyz0123456789:/\\-_!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz0123456789:/\\-_!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz0123456789:/\\-_!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+      },
+      {
+        "name": "Content-Type",
+        "value": "text/plain; charset=\"UTF-8\""
+      },
+      {
+        "name": "Content-Transfer-Encoding",
+        "value": "base64"
+      },
+      {
+        "name": "Date",
+        "value": "Wed, 27 Jan 2016 14:05:45 +0000"
+      }
+    ],
+    "commonHeaders": {
+      "from": [
+        "John Doe <john@example.com>"
+      ],
+      "date": "Wed, 27 Jan 2016 14:05:45 +0000",
+      "to": [
+        "Jane Doe <jane@example.com>, Mary Doe <mary@example.com>, Richard Doe <richard@cru.org>"
+      ],
+      "messageId": "custom-message-ID",
+      "subject": "Super long subject with wéîrd characters and emoji \uD83D\uDE00 \uD83E\uDD20 \uD83D\uDE3A  abcdefghijklmnopqrstuvwxyz0123456789:/\\-_!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz0123456789:/\\-_!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz0123456789:/\\-_!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    }
+  }
+}
