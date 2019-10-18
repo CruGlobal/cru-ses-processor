@@ -35,6 +35,7 @@ describe('DataDogMetrics', () => {
         expect(dogapi.metric.send_all).toHaveBeenCalledWith([{
           metric: 'cru.ses.delivery',
           points: [[1453906778, 1]],
+          metric_type: 'count',
           tags: [
             'source_arn:arn:aws:ses:us-west-2:888888888888:identity/example.com',
             'sender:john@example.com',
@@ -55,6 +56,7 @@ describe('DataDogMetrics', () => {
         expect(dogapi.metric.send_all).toHaveBeenCalledWith([{
           metric: 'cru.ses.bounce',
           points: [[1453906778, 1]],
+          metric_type: 'count',
           tags: [
             'source_arn:arn:aws:ses:us-west-2:888888888888:identity/example.com',
             'sender:john@example.com',
@@ -66,6 +68,7 @@ describe('DataDogMetrics', () => {
         }, {
           metric: 'cru.ses.bounce',
           points: [[1453906778, 1]],
+          metric_type: 'count',
           tags: [
             'source_arn:arn:aws:ses:us-west-2:888888888888:identity/example.com',
             'sender:john@example.com',
@@ -88,6 +91,7 @@ describe('DataDogMetrics', () => {
         expect(dogapi.metric.send_all).toHaveBeenCalledWith([{
           metric: 'cru.ses.complaint',
           points: [[1453906778, 1]],
+          metric_type: 'count',
           tags: [
             'source_arn:arn:aws:ses:us-west-2:888888888888:identity/example.com',
             'sender:john@example.com',

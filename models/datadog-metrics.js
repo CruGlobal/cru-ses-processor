@@ -29,6 +29,7 @@ class DataDogMetrics {
       const metrics = this.recipientEmails().map(emailAddress => ({
         metric: this.metric(),
         points: [[this.timestamp(), 1]],
+        metric_type: 'count',
         tags: compact([
           this.sourceArnTag(),
           this.senderTag(),
