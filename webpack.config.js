@@ -12,13 +12,5 @@ module.exports = {
   },
   performance: {
     hints: false
-  },
-  module: {
-    rules: [{
-      test: /\.js$/,
-      loader: 'babel-loader',
-      include: __dirname,
-      exclude: /node_modules/
-    }]
   }
 }
