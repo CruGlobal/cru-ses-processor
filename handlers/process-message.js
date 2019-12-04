@@ -25,7 +25,7 @@ export const handler = async (lambdaEvent) => {
         .send()
     ])
   } catch (error) {
-    rollbar.error('process-message error', error, { lambdaEvent })
-    return Promise.reject(error)
+    await rollbar.error('process-message error', error, { lambdaEvent })
+    throw error
   }
 }

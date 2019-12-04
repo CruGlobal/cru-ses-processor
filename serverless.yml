@@ -2,16 +2,26 @@ service: cru-ses-processor
 
 provider:
   name: aws
+  stage: ${env:ENVIRONMENT}
   runtime: nodejs10.x
-  stage: production
   region: us-east-1
-  environment: ${file(serverless/environment.js)}
+  vpc:
+    securityGroupIds:
+      - ${file(${env:ECS_CONFIG}/bin/vars.yml):us-east-1.webapp_elb_sg}
+    subnetIds: ${file(${env:ECS_CONFIG}/bin/vars.yml):us-east-1.prod_apps_1_all}
+  stackTags:
+    Name: ${env:PROJECT_NAME}-${self:custom.environmentMap.${env:ENVIRONMENT}}
+    owner: devops-engineering-team@cru.org
+    application: ${env:PROJECT_NAME}
+    env: ${self:custom.environmentMap.${env:ENVIRONMENT}}
+    managed_by: serverless-framework
+    function: lambda
   iamRoleStatements:
     - Effect: Allow
       Action:
         - SNS:Publish
       Resource: ${env:SNS_SES_EVENTS_FILTERABLE_ARN}
-  $<<: ${file(serverless/provider.js)}
+  environment: ${file(serverless/environment.js)}
 
 functions:
   processMessage:
@@ -39,6 +49,12 @@ custom:
     webpackConfig: ./webpack.config.js
     includeModules: true
     packager: yarn
+    excludeFiles: '**/*.test.js'
+  environmentMap:
+    production: prod
+    staging: stage
+    development: dev
+    lab: lab
 
 resources:
   Resources:
