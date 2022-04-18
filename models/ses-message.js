@@ -39,11 +39,11 @@ class SesMessage {
     return {
       source: {
         DataType: 'String',
-        StringValue: this.message['mail'].source
+        StringValue: this.message.mail.source
       },
       destination: {
         DataType: 'String.Array',
-        StringValue: JSON.stringify(this.message['mail'].destination)
+        StringValue: JSON.stringify(this.message.mail.destination)
       }
     }
   }
@@ -51,15 +51,15 @@ class SesMessage {
   get bounceMessageAttributes () {
     if (this.notificationType === BOUNCE_TYPE) {
       // See https://docs.aws.amazon.com/ses/latest/DeveloperGuide/notification-contents.html#bounce-object
-      const bouncedRecipients = this.message['bounce'].bouncedRecipients.map(val => val.emailAddress)
+      const bouncedRecipients = this.message.bounce.bouncedRecipients.map(val => val.emailAddress)
       return {
         bounceType: {
           DataType: 'String',
-          StringValue: this.message['bounce'].bounceType
+          StringValue: this.message.bounce.bounceType
         },
         bounceSubType: {
           DataType: 'String',
-          StringValue: this.message['bounce'].bounceSubType
+          StringValue: this.message.bounce.bounceSubType
         },
         bouncedRecipients: {
           DataType: 'String.Array',
@@ -73,7 +73,7 @@ class SesMessage {
   get complaintMessageAttributes () {
     if (this.notificationType === COMPLAINT_TYPE) {
       // See https://docs.aws.amazon.com/ses/latest/DeveloperGuide/notification-contents.html#complaint-object
-      const complaints = this.message['complaint'].complainedRecipients.map(val => val.emailAddress)
+      const complaints = this.message.complaint.complainedRecipients.map(val => val.emailAddress)
       const attributes = {
         complainedRecipients: {
           DataType: 'String.Array',
@@ -81,10 +81,10 @@ class SesMessage {
         }
       }
       /* istanbul ignore else */
-      if (this.message['complaint'].complaintFeedbackType) {
+      if (this.message.complaint.complaintFeedbackType) {
         attributes.complaintFeedbackType = {
           DataType: 'String',
-          StringValue: this.message['complaint'].complaintFeedbackType
+          StringValue: this.message.complaint.complaintFeedbackType
         }
       }
       return attributes
@@ -98,7 +98,7 @@ class SesMessage {
       return {
         recipients: {
           DataType: 'String.Array',
-          StringValue: JSON.stringify(this.message['delivery'].recipients)
+          StringValue: JSON.stringify(this.message.delivery.recipients)
         }
       }
     }

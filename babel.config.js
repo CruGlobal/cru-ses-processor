@@ -1,12 +1,12 @@
 module.exports = {
-  'comments': false,
+  comments: false,
   plugins: ['source-map-support'],
-  'presets': [
+  presets: [
     [
       '@babel/preset-env',
       {
-        'targets': {
-          'node': '10'
+        targets: {
+          node: '16'
         }
       }
     ]

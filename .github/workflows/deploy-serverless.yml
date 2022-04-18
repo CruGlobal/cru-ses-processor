@@ -1,0 +1,15 @@
+name: Deploy Serverless Functions
+
+on:
+  push:
+    branches:
+      # Automatically deploy master. Additional branches may be added.
+      - master
+  workflow_dispatch:
+    # Allows manual build and deploy of any branch/ref
+
+jobs:
+  # Deploy Serverless functions
+  deploy:
+    name: Deploy
+    uses: CruGlobal/.github/.github/workflows/deploy-serverless.yml@v1
