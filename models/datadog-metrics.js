@@ -33,6 +33,7 @@ class DataDogMetrics {
         tags: compact([
           this.sourceArnTag(),
           this.senderTag(),
+          this.callerIdentityTag(),
           this.recipientTag(emailAddress),
           this.subjectTag(),
           this.bounceTypeTag(),
@@ -92,6 +93,10 @@ class DataDogMetrics {
 
   senderTag () {
     return this.tag('sender', 'mail.source')
+  }
+
+  callerIdentityTag () {
+    return this.tag('caller_identity', 'mail.callerIdentity')
   }
 
   subjectTag () {
