@@ -39,6 +39,7 @@ describe('DataDogMetrics', () => {
           tags: [
             'source_arn:arn:aws:ses:us-west-2:888888888888:identity/example.com',
             'sender:john@example.com',
+            'caller_identity:sesv2-app-prod',
             'recipient_domain:example.com',
             'subject:hello'
           ]
@@ -60,6 +61,7 @@ describe('DataDogMetrics', () => {
           tags: [
             'source_arn:arn:aws:ses:us-west-2:888888888888:identity/example.com',
             'sender:john@example.com',
+            'caller_identity:sesv2-app-prod',
             'recipient_domain:example.com',
             'subject:super_long_subject_with_w_rd_characters_and_emoji_abcdefghijklmnopqrstuvwxyz0123456789:/\\-_abcdefghijklmnopqrstuvwxyz_abcdefghijklmnopqrstuvwxyz0123456789:/\\-_abcdefghijklmnopqrstuvwxyz_abcdef',
             'bounce_type:permanent',
@@ -72,6 +74,7 @@ describe('DataDogMetrics', () => {
           tags: [
             'source_arn:arn:aws:ses:us-west-2:888888888888:identity/example.com',
             'sender:john@example.com',
+            'caller_identity:sesv2-app-prod',
             'recipient_domain:cru.org',
             'subject:super_long_subject_with_w_rd_characters_and_emoji_abcdefghijklmnopqrstuvwxyz0123456789:/\\-_abcdefghijklmnopqrstuvwxyz_abcdefghijklmnopqrstuvwxyz0123456789:/\\-_abcdefghijklmnopqrstuvwxyz_abcdef',
             'bounce_type:permanent',
@@ -95,6 +98,7 @@ describe('DataDogMetrics', () => {
           tags: [
             'source_arn:arn:aws:ses:us-west-2:888888888888:identity/example.com',
             'sender:john@example.com',
+            'caller_identity:sesv2-app-prod',
             'recipient_domain:example.com',
             'subject:hello',
             'complaint_type:abuse'
