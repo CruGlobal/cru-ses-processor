@@ -11,7 +11,8 @@ RUN yarn build
 ARG NODE_VERSION=latest
 FROM public.ecr.aws/lambda/nodejs:${NODE_VERSION}
 
-COPY --from=builder /app/node_modules ${LAMBDA_TASK_ROOT}/node_modules
-COPY --from=builder /app/dist/* ${LAMBDA_TASK_ROOT}/
+WORKDIR ${LAMBDA_TASK_ROOT}
+COPY --from=builder /app/node_modules ./node_modules/
+COPY --from=builder /app/dist/* ./
 
 CMD ["main.handler"]
