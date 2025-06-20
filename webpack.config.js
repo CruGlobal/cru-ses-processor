@@ -1,5 +1,4 @@
 const webpack = require('webpack')
-const slsw = require('serverless-webpack')
 const nodeExternals = require('webpack-node-externals')
 const RollbarSourceMapPlugin = require('rollbar-sourcemap-webpack-plugin')
 const childProcess = require('child_process')
@@ -11,16 +10,16 @@ function git (command) {
 module.exports = (async () => {
   const version = git('rev-parse --short HEAD')
   return {
-    entry: slsw.lib.entries,
+    entry: './handlers/process-message.js',
     target: 'node',
     devtool: 'hidden-source-map',
-    mode: slsw.lib.webpack.isLocal ? 'development' : 'production',
+    mode: 'production',
     externals: [nodeExternals()],
     performance: {
       hints: false
     },
     optimization: {
-      minimize: true,
+      minimize: false,
       usedExports: true
     },
     plugins: [
