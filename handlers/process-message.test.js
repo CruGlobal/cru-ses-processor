@@ -35,7 +35,7 @@ describe('`process-message` lambda function', () => {
     mockSend.mockResolvedValue({})
 
     await expect(handler({ Records: [{ Sns: { Message: JSON.stringify(deliveryMessage) } }] }))
-      .rejects.toThrowError('Ohh noes!!!')
+      .rejects.toThrow('Ohh noes!!!')
     expect(rollbar.error).toHaveBeenCalled()
   })
 
