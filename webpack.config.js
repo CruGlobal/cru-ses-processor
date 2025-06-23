@@ -14,13 +14,13 @@ module.exports = {
   mode: 'production',
   target: 'node',
   entry: {
-    'process-message': './handlers/process-message.js',
+    'process-message': './handlers/process-message.js'
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
     chunkFormat: false,
     library: {
-      type: 'commonjs2',
+      type: 'commonjs2'
     }
   },
   devtool: 'source-map',
@@ -46,7 +46,7 @@ module.exports = {
         accessToken: process.env.ROLLBAR_ACCESS_TOKEN,
         ignoreErrors: true,
         publicPath: '/var/task',
-        version: version
+        version
       })
       : false
   ].filter(Boolean),
