@@ -23,6 +23,14 @@ module.exports = {
       type: 'commonjs2'
     }
   },
+  module: {
+    rules: [{
+      exclude: [
+        /datadog-lambda-js/,
+        /dd-trace/
+      ]
+    }]
+  },
   devtool: 'source-map',
   optimization: {
     minimize: true,

@@ -33,12 +33,14 @@ ENV BUILD_NUMBER=${BUILD_NUMBER}
 # Set the Lambda task root directory
 WORKDIR ${LAMBDA_TASK_ROOT}
 
-# Copy the secrets-lambda-extension from the extension stage
+# Copy the secrets-lambda-extension from the extension stage and setup wrapper
 COPY --from=extension /opt/secrets-lambda-extension /opt/secrets-lambda-extension
 ENV AWS_LAMBDA_EXEC_WRAPPER=/opt/secrets-lambda-extension/secrets-wrapper
 
+# Setup DataDog metrics/logs
+RUN npm install datadog-lambda-js dd-trace
+COPY --from=public.ecr.aws/datadog/lambda-extension:latest /opt/. /opt/
+CMD ["node_modules/datadog-lambda-js/dist/handler.handler"]
+
 # Copy the built application from the builder stage
 COPY --from=builder /app/dist/* ./
-
-# Set the default handler for the container, this can be changed in Terraform if multiple handlers are used
-CMD ["process-message.handler"]
