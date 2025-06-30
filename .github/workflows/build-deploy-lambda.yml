@@ -25,7 +25,7 @@ jobs:
     needs: build
     if: github.event_name != 'workflow_dispatch' || github.event.inputs.auto-deploy == 'true'
     steps:
-      - uses: CruGlobal/.github/actions/trigger-deploy@v1
+      - uses: CruGlobal/.github/actions/trigger-deploy@rewrite-lambda-build-deploy
         with:
           github-token: ${{ secrets.CRU_DEPLOY_GITHUB_TOKEN }}
           project-name: ${{ needs.build.outputs.project-name }}
