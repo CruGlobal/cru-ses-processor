@@ -1,4 +1,4 @@
-const mockDogapi = jest.genMockFromModule('dogapi')
+const mockDogapi = jest.createMockFromModule('dogapi')
 
 // client methods aren't exposed in the module, so they aren't auto-mocked
 mockDogapi.metric = {
