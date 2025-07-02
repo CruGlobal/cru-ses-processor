@@ -1,21 +1,24 @@
-name: Deploy Lambda Functions
+name: Build & Deploy Lambda
 
 on:
   push:
     branches:
-      # Automatically deploy master. Additional branches may be added.
-      # - master
-      - rewrite-build-update-nodejs
-  # Allows manual build and deploy of any branch/ref
+      # Automatically deploy main. Additional branches may be added.
+      - main
   workflow_dispatch:
+    # Allows manual build and deploy of any branch/ref
+    inputs:
+      auto-deploy:
+        type: boolean
+        description: Deploy image after building?
+        required: true
+        default: 'false'
 
 jobs:
   # Build and push lambda container image to ECR. Builds occur in the project repository.
   build:
     name: Build
-    uses: CruGlobal/.github/.github/workflows/build-lambda.yml@rewrite-lambda-build-deploy
-    with:
-      workflow-ref: rewrite-lambda-build-deploy
+    uses: CruGlobal/.github/.github/workflows/build-lambda.yml@v1
 
   # Triggers a Lambda deployment in https://github.com/CruGlobal/cru-deploy/actions.
   # All deployments happen in the cru-deploy repo.
@@ -25,11 +28,10 @@ jobs:
     needs: build
     if: github.event_name != 'workflow_dispatch' || github.event.inputs.auto-deploy == 'true'
     steps:
-      - uses: CruGlobal/.github/actions/trigger-deploy@rewrite-lambda-build-deploy
+      - uses: CruGlobal/.github/actions/trigger-deploy@v1
         with:
           github-token: ${{ secrets.CRU_DEPLOY_GITHUB_TOKEN }}
           project-name: ${{ needs.build.outputs.project-name }}
           environment: ${{ needs.build.outputs.environment }}
           build-number: ${{ needs.build.outputs.build-number }}
           deploy-type: 'lambda'
-          workflow-ref: 'add-deploy-lambda'
