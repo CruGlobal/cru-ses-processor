@@ -32,7 +32,8 @@
     "webpack-cli": "^6.0.1"
   },
   "dependencies": {
-    "aws-sdk": "^2.1692.0",
+    "@aws-sdk/client-sns": "^3.840.0",
+    "@aws-sdk/client-sts": "^3.840.0",
     "datadog-lambda-js": "^11.126.0",
     "dd-trace": "^5.57.1",
     "lodash": "^4.17.21",

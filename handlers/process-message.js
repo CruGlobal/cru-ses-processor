@@ -1,6 +1,6 @@
 'use strict'
 
-import { SNS } from 'aws-sdk'
+import { PublishCommand, SNSClient } from '@aws-sdk/client-sns'
 import rollbar from '../config/rollbar'
 import SesMessage from '../models/ses-message'
 import DataDogMetrics from '../models/datadog-metrics'
@@ -15,11 +15,14 @@ export const handler = async (lambdaEvent) => {
       return {}
     }
 
+    const snsClient = new SNSClient({})
     return await Promise.all([
       // Forward message to `all-ses-events-filterable` SNS queue with added messageAttributes
-      new SNS({ apiVersion: '2010-03-31', region: 'us-east-1' })
-        .publish({ TargetArn: process.env.SNS_SES_EVENTS_FILTERABLE_ARN, ...message.toSNSMessage() })
-        .promise(),
+      snsClient.send(new PublishCommand({
+        TargetArn: process.env.SNS_SES_EVENTS_FILTERABLE_ARN,
+        ...message.toSNSMessage()
+      })),
+
       // Send SES event metrics to DataDog
       new DataDogMetrics(message)
         .send()

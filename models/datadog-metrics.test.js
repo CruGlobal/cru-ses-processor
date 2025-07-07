@@ -95,14 +95,14 @@ describe('DataDogMetrics', () => {
       })
     })
 
-      describe('dogapi error', () => {
-        it('should reject the promise', async () => {
-          const datadog = new DataDogMetrics(new SesMessage(deliveryMessage))
-          sendDistributionMetricWithDate.mockImplementation(() => {
-            throw new Error('An Error Occurred!')
-          })
-          await expect(datadog.send()).rejects.toThrow('An Error Occurred!')
+    describe('dogapi error', () => {
+      it('should reject the promise', async () => {
+        const datadog = new DataDogMetrics(new SesMessage(deliveryMessage))
+        sendDistributionMetricWithDate.mockImplementation(() => {
+          throw new Error('An Error Occurred!')
         })
+        await expect(datadog.send()).rejects.toThrow('An Error Occurred!')
       })
+    })
   })
 })
