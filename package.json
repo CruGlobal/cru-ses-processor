@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "aws-sdk": "^2.1692.0",
-    "dogapi": "^2.8.4",
+    "datadog-lambda-js": "^11.126.0",
     "lodash": "^4.17.21",
     "rollbar": "^2.26.4",
     "source-map-support": "^0.5.21"

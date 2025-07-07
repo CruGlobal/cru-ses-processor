@@ -1,4 +1,4 @@
-import dogapi from 'dogapi'
+import { sendDistributionMetricWithDate } from 'datadog-lambda-js'
 import get from 'lodash/get'
 import has from 'lodash/has'
 import toLower from 'lodash/toLower'
@@ -7,29 +7,25 @@ import truncate from 'lodash/truncate'
 import compact from 'lodash/compact'
 import { BOUNCE_TYPE, COMPLAINT_TYPE, DELIVERY_TYPE } from './ses-message'
 
-const BOUNCE_METRIC = 'cru.ses.bounce'
-const COMPLAINT_METRIC = 'cru.ses.complaint'
-const DELIVERY_METRIC = 'cru.ses.delivery'
+const BOUNCE_METRIC = 'cru.sesv2.bounce'
+const COMPLAINT_METRIC = 'cru.sesv2.complaint'
+const DELIVERY_METRIC = 'cru.sesv2.delivery'
 
 class DataDogMetrics {
   constructor (sesMessage) {
     this.sesMessage = sesMessage
-    dogapi.initialize({
-      api_key: process.env.DATADOG_API_KEY,
-      app_key: process.env.DATADOG_APP_KEY
-    })
   }
 
   get message () {
     return this.sesMessage.message
   }
 
-  send () {
-    return new Promise((resolve, reject) => {
+  async send () {
+    try {
       const metrics = this.recipientEmails().map(emailAddress => ({
-        metric: this.metric(),
-        points: [[this.timestamp(), 1]],
-        metric_type: 'count',
+        name: this.metric(),
+        value: 1,
+        metric_time: this.timestamp(),
         tags: compact([
           this.sourceArnTag(),
           this.senderTag(),
@@ -42,16 +38,18 @@ class DataDogMetrics {
         ])
       }))
 
-      console.log('Sending DataDog metrics:', metrics)
-
-      dogapi.metric.send_all(metrics, (err, results) => {
-        if (err) {
-          reject(err)
-        } else {
-          resolve(results)
-        }
-      })
-    })
+      for (const metric of metrics) {
+        sendDistributionMetricWithDate(
+          metric.name,
+          metric.value,
+          metric.metric_time,
+          ...metric.tags
+        )
+      }
+      return Promise.resolve(metrics)
+    } catch (err) {
+      return Promise.reject(err)
+    }
   }
 
   recipientEmails () {
@@ -79,7 +77,7 @@ class DataDogMetrics {
   timestamp () {
     const time = get(this.message, 'mail.timestamp')
     const date = time ? new Date(time) : /* istanbul ignore next: difficult to test without time mocks */ new Date()
-    return parseInt(date.getTime() / 1000)
+    return date
   }
 
   tag (tag, path, transform = identity) {
