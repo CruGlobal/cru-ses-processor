@@ -15,7 +15,7 @@ module.exports = {
   target: 'node',
   entry: {
     'process-message': './handlers/process-message.js',
-    'testing': './handlers/testing.js'
+    testing: './handlers/testing.js'
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
