@@ -12,7 +12,6 @@ const version = git('rev-parse --short HEAD')
 
 module.exports = {
   mode: 'production',
-  target: 'node',
   entry: {
     'process-message': './handlers/process-message.js',
     testing: './handlers/testing.js'
@@ -24,13 +23,12 @@ module.exports = {
       type: 'commonjs2'
     }
   },
-  module: {
-    rules: [{
-      exclude: [
-        /datadog-lambda-js/,
-        /dd-trace/
-      ]
-    }]
+  externalsPresets: {
+    node: true
+  },
+  externals: {
+    'datadog-lambda-js': 'datadog-lambda-js',
+    'dd-trace': 'dd-trace'
   },
   devtool: 'source-map',
   optimization: {
