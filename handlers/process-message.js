@@ -15,7 +15,7 @@ export const handler = async (lambdaEvent) => {
       return {}
     }
 
-    const snsClient = new SNSClient({})
+    const snsClient = new SNSClient({ region: process.env.AWS_REGION || 'us-east-1' })
     return await Promise.all([
       // Forward message to `all-ses-events-filterable` SNS queue with added messageAttributes
       snsClient.send(new PublishCommand({
