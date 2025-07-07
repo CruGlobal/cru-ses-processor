@@ -42,6 +42,8 @@ class DataDogMetrics {
         ])
       }))
 
+      console.log('Sending DataDog metrics:', metrics)
+
       dogapi.metric.send_all(metrics, (err, results) => {
         if (err) {
           reject(err)
