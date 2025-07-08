@@ -14,8 +14,7 @@ module.exports = {
   target: 'node',
   mode: 'production',
   entry: {
-    'process-message': './handlers/process-message.js',
-    testing: './handlers/testing.js'
+    'process-message': './handlers/process-message.js'
   },
   output: {
     path: path.resolve(__dirname, 'dist'),

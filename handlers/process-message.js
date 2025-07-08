@@ -1,7 +1,4 @@
-'use strict'
-
 import { PublishCommand, SNSClient } from '@aws-sdk/client-sns'
-import { fromNodeProviderChain } from '@aws-sdk/credential-providers'
 import rollbar from '../config/rollbar'
 import SesMessage from '../models/ses-message'
 import DataDogMetrics from '../models/datadog-metrics'
@@ -16,9 +13,7 @@ export const handler = async (lambdaEvent) => {
       return {}
     }
 
-    const credentials = fromNodeProviderChain()
     const snsClient = new SNSClient({
-      credentials,
       region: process.env.AWS_REGION || 'us-east-1'
     })
     return await Promise.all([
