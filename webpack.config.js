@@ -11,6 +11,7 @@ function git (command) {
 const version = git('rev-parse --short HEAD')
 
 module.exports = {
+  target: 'node',
   mode: 'production',
   entry: {
     'process-message': './handlers/process-message.js',
