@@ -16,7 +16,7 @@
   "scripts": {
     "lint": "standard --verbose",
     "test": "jest --detectOpenHandles --coverage",
-    "build": "esbuild handlers/process-message.js --bundle --platform=node --target=node24 --outfile=dist/process-message.js --sourcemap --format=cjs"
+    "build": "esbuild handlers/process-message.js --bundle --external:datadog-lambda-js --external:dd-trace --platform=node --target=node24 --outfile=dist/process-message.js --sourcemap --format=cjs"
   },
   "devDependencies": {
     "@babel/core": "^7.27.4",
