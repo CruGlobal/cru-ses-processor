@@ -5,15 +5,15 @@ FROM public.ecr.aws/docker/library/node:${NODE_VERSION} AS builder
 
 # Build the lambda function
 WORKDIR /app
-COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
+COPY package*.json ./
+RUN npm ci
 COPY . .
-RUN yarn build
+RUN npm run build
 
 # Download and extract the secrets-lambda-extension
 FROM public.ecr.aws/docker/library/alpine:latest AS extension
 RUN mkdir -p /opt/secrets-lambda-extension && \
-    wget https://github.com/CruGlobal/secrets-lambda-extension/releases/download/v1.0.1/secrets-lambda-extension-linux-amd64.tar.gz -q -O - |tar -xzC /opt/secrets-lambda-extension/
+    wget https://github.com/CruGlobal/secrets-lambda-extension/releases/latest/download/secrets-lambda-extension-linux-amd64.tar.gz -q -O - |tar -xzC /opt/secrets-lambda-extension/
 
 # NODE_VERSION set by build.sh based on .tool-versions file
 ARG NODE_VERSION=latest
