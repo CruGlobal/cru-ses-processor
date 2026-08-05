@@ -31,7 +31,7 @@
   "dependencies": {
     "@aws-sdk/client-sns": "^3.1101.0",
     "datadog-lambda-js": "^11.126.0",
-    "dd-trace": "^5.57.1",
+    "dd-trace": "^6.8.0",
     "lodash": "^4.18.1",
     "rollbar": "^2.26.4",
     "source-map-support": "^0.5.21"
