@@ -1,5 +1,9 @@
 name: Node.js CI
 
+# The `test` job is a REQUIRED status check in this repo's branch ruleset
+# (managed in cru-terraform, not here) — don't rename the job without updating
+# it there, and keep the pull_request filter matching the default branch or the
+# check never reports and nothing can merge.
 on:
   push:
     branches:
@@ -7,7 +11,11 @@ on:
       - '!master'
   pull_request:
     branches:
-      - 'master'
+      # `main` is the default branch. This said `master` until pipeline-v2
+      # onboarding: the default branch moved years ago and the filter never
+      # followed, so no PR into `main` ever triggered this workflow — the push
+      # trigger above was the only thing running the suite.
+      - 'main'
 
 jobs:
   test:
