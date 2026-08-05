@@ -1,10 +1,34 @@
 name: Build & Deploy Lambda
 
 on:
-  push:
-    branches:
-      # Automatically deploy main. Additional branches may be added.
-      - main
+  # Parked v1 escape hatch — do not re-add push triggers. This app builds and
+  # deploys through .github/workflows/pipeline-v2.yml; this workflow stays
+  # dispatch-only so the v1 build+deploy path is still reachable by hand.
+  # Restoring the push trigger on main would double-build every merge and push
+  # v1's environment-specific `production-<n>` tags alongside v2's candidates.
+  #
+  # What still works after the v2 Terraform applies, and what doesn't:
+  #
+  # * The build identity SURVIVES. Unlike ECS — where v2 removes GitHub OIDC
+  #   trust from the prod TaskRole and a v1 build immediately gets AccessDenied —
+  #   aws/lambda/app still creates `cru-ses-processor-prod-GitHubRole` with the
+  #   same trust and the same ECR push grants under v2, and cru-deploy still
+  #   carries its v1 `deploy-lambda.yml` with no PipelineVersion gate. This
+  #   hatch is genuinely usable, not theoretically usable.
+  # * The IMAGE is now env-neutral. The v1 build passes
+  #   --build-arg PROJECT_NAME/ENVIRONMENT/BUILD_NUMBER; the Dockerfile no
+  #   longer declares them, so docker ignores them with an unused-build-arg
+  #   warning. Harmless: aws/lambda/app force-sets PROJECT_NAME and ENVIRONMENT
+  #   as function env vars (it did so at v37.2.1 too, so nothing regresses), and
+  #   the secrets-lambda-extension made BUILD_NUMBER optional in v1.0.2, which
+  #   this Dockerfile now pins.
+  # * The LEDGER goes stale. A v1 deploy publishes function code directly and
+  #   writes nothing to CruDeploymentLedger, so deploys.cru.org and `cru app`
+  #   keep showing the last v2 promote until a v2 promote catches up. Fine for
+  #   an emergency; not a path to stay on.
+  #
+  # The normal undo for a bad candidate is a v2 rollback, or a fix forward: PR
+  # to main, dispatch Pipeline v2, let the verify gate pass, promote.
   workflow_dispatch:
     # Allows manual build and deploy of any branch/ref
     inputs:

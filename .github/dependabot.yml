@@ -1,0 +1,63 @@
+# Dependency updates for this app.
+#
+# Grouping keeps review cost flat: one weekly PR per ecosystem batching minor +
+# patch, with majors left ungrouped so each gets its own PR and a real migration
+# check. The `commit-message.prefix` values are not cosmetic — the repo's
+# "Validate PR Title" check requires a Conventional Commit title, so a PR
+# without a prefix cannot merge at all.
+#
+# Note this file is not what turns Dependabot on: GitHub SECURITY updates run
+# with no config, and the v2 repo module enables vulnerability alerts
+# unconditionally. What this file adds is grouping, prefixes, and version
+# updates.
+version: 2
+
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    groups:
+      npm-dependencies:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+    commit-message:
+      prefix: "deps"
+      include: "scope"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 3
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+    commit-message:
+      prefix: "ci"
+      include: "scope"
+
+  # Docker earns its place only because the Dockerfile now pins two base images
+  # to literal tags — alpine (the stage that fetches the secrets extension) and
+  # the Datadog lambda-extension, which was moved into a named FROM stage
+  # precisely so Dependabot can see it. Dependabot parses FROM lines statically
+  # and never runs the build, so the other two FROMs are invisible to it by
+  # design: they are `${NODE_VERSION}`, supplied by build.sh from .tool-versions,
+  # and resolve to the `latest` ARG placeholder — which Dependabot skips rather
+  # than bumping. Node's version lives in .tool-versions; bump it there.
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 2
+    commit-message:
+      prefix: "docker"
+      include: "scope"
