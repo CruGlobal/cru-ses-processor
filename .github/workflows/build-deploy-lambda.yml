@@ -42,7 +42,7 @@ jobs:
   # Build and push lambda container image to ECR. Builds occur in the project repository.
   build:
     name: Build
-    uses: CruGlobal/.github/.github/workflows/build-lambda.yml@v1
+    uses: CruGlobal/.github/.github/workflows/build-lambda.yml@v2
 
   # Triggers a Lambda deployment in https://github.com/CruGlobal/cru-deploy/actions.
   # All deployments happen in the cru-deploy repo.
