@@ -19,7 +19,7 @@
     "build": "esbuild handlers/process-message.js --bundle --external:datadog-lambda-js --external:dd-trace --platform=node --target=node24 --outfile=dist/process-message.js --sourcemap --format=cjs"
   },
   "devDependencies": {
-    "@babel/core": "^7.27.4",
+    "@babel/core": "^8.0.5",
     "@babel/preset-env": "^7.27.2",
     "@types/jest": "^30.0.0",
     "babel-jest": "^30.5.1",
