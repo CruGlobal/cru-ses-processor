@@ -26,7 +26,7 @@ RUN mkdir -p /opt/secrets-lambda-extension && \
 # `COPY --from=public.ecr.aws/datadog/lambda-extension:latest` so the version is
 # a literal tag on a FROM line: reproducible, and visible to Dependabot's docker
 # ecosystem, which only ever parses FROM.
-FROM public.ecr.aws/datadog/lambda-extension:99 AS datadog-extension
+FROM public.ecr.aws/datadog/lambda-extension:100 AS datadog-extension
 
 # NODE_VERSION set by build.sh based on .tool-versions file
 ARG NODE_VERSION=latest
