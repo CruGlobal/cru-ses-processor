@@ -15,10 +15,11 @@ RUN npm run build
 # PINNED, both the alpine base and the release. Pipeline v2 builds one image and
 # promotes those exact bytes to production, so every build input has to be a
 # fixed version: `releases/latest/download/...` meant two builds of the same
-# commit could ship different runtimes. v1.0.2 is also the release that made
-# BUILD_NUMBER optional, which is what lets this image stop baking it (below).
+# commit could ship different runtimes. v1.0.2 made BUILD_NUMBER optional,
+# which is what lets this image stop baking it (below). v1.0.3 is built with
+# Go 1.27.3, which clears the Go standard library CVEs in the v1.0.2 binary.
 FROM public.ecr.aws/docker/library/alpine:3.24.1 AS extension
-ARG SECRETS_EXTENSION_VERSION=v1.0.2
+ARG SECRETS_EXTENSION_VERSION=v1.0.3
 RUN mkdir -p /opt/secrets-lambda-extension && \
     wget https://github.com/CruGlobal/secrets-lambda-extension/releases/download/${SECRETS_EXTENSION_VERSION}/secrets-lambda-extension-linux-amd64.tar.gz -q -O - |tar -xzC /opt/secrets-lambda-extension/
 
