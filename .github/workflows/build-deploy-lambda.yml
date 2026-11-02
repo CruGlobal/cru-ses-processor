@@ -20,8 +20,8 @@ on:
   #   longer declares them, so docker ignores them with an unused-build-arg
   #   warning. Harmless: aws/lambda/app force-sets PROJECT_NAME and ENVIRONMENT
   #   as function env vars (it did so at v37.2.1 too, so nothing regresses), and
-  #   the secrets-lambda-extension made BUILD_NUMBER optional in v1.0.2, which
-  #   this Dockerfile now pins.
+  #   the secrets-lambda-extension made BUILD_NUMBER optional in v1.0.2, and
+  #   this Dockerfile pins a release at or after it.
   # * The LEDGER goes stale. A v1 deploy publishes function code directly and
   #   writes nothing to CruDeploymentLedger, so deploys.cru.org and `cru app`
   #   keep showing the last v2 promote until a v2 promote catches up. Fine for
