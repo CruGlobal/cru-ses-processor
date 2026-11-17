@@ -50,9 +50,11 @@ is stale.
    existing candidate.
 4. **Promotion to production and rollbacks** are Actions in
    [`cru-deploy`](https://github.com/CruGlobal/cru-deploy) — not workflows in
-   this repo — driven by `cru app promote -n cru-ses-processor` /
-   `cru app rollback -n cru-ses-processor`, which check that you have **push
-   access** to this repo. Merging to `main` deploys nothing by itself.
+   this repo — started with `cru app promote -n cru-ses-processor` /
+   `cru app rollback -n cru-ses-processor <release>`. The CLI signs you in with
+   Okta and sends the request through the deploy gate, which allows it only for
+   the developers listed in this app's Terraform; push access to this repo does
+   not count. Merging to `main` deploys nothing by itself.
 5. **`release-*` image tags are permanent.** The ECR lifecycle policy claims
    every release-carrying digest ahead of every expiry rule, so any promoted
    image stays pullable and rollback targets never age out.
