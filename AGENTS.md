@@ -139,11 +139,8 @@ reports `rollback-safe (no database migrations)`. Nothing to configure.
   `github-merge-bot` App acted on the `staging` branch and the `On Staging`
   label, neither of which exists under v2. Do not re-add the file: its
   *presence* is the one thing that could switch the App back on.
-- **`.github/workflows/build-deploy-lambda.yml` is parked on purpose** —
-  dispatch-only, no push trigger. It is the escape hatch if the v2 path itself
-  breaks, and for Lambda it still works after the v2 applies (the build role is
-  unchanged). Read the comment at the top before using it. Do not re-add the
-  push trigger.
+- **The v1 workflow, `.github/workflows/build-deploy-lambda.yml`, is gone.**
+  `pipeline-v2.yml` is the only build. Don't bring back a push-triggered one.
 - **Commit history before onboarding is not Conventional Commits**, and
   `package.json`'s `version: 1.0.0` is meaningless — there is no release-please
   here. v2 versions releases with `release-*` image tags and the deployments
